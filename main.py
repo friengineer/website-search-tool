@@ -19,7 +19,7 @@ def build():
 
     # retrieve sitemap, parse it and add URLs that can be fetched to the queue
     try:
-        r = requests.get(rp.site_maps()[0], timeout=20)
+        r = requests.get(rp.site_maps()[0], timeout = 20)
     except:
         print('Could not retrieve sitemap.')
     else:
@@ -48,7 +48,7 @@ def build():
             time.sleep(crawlDelay)
 
             try:
-                r = requests.get(url, timeout=20)
+                r = requests.get(url, timeout = 20)
             except:
                 print('Connection timeout for', url)
                 continue
@@ -57,7 +57,7 @@ def build():
             if len(r.history) != 0:
                 if re.search('\?', r.url):
                     parsed = urlparse(r.url)
-                    parsed = parsed._replace(query='')
+                    parsed = parsed._replace(query = '')
                     url = urlunparse(parsed)
                 else:
                     url = r.url
@@ -75,7 +75,7 @@ def build():
             for link in page.find_all('a'):
                 if re.search('\?', link['href']):
                     parsed = urlparse(link['href'])
-                    parsed = parsed._replace(query='')
+                    parsed = parsed._replace(query = '')
                     link['href'] = urlunparse(parsed)
 
                 if not urljoin(site, link['href']) in siteQueue and urljoin(site, link['href']) not in pages:
@@ -111,7 +111,7 @@ def build():
             i += 1
 
     # save the index file to disk
-    with open('index.json', 'w', encoding='utf-8') as file:
+    with open('index.json', 'w', encoding = 'utf-8') as file:
         file.write(json.dumps(invertedFile))
 
 # load the index file from disk
@@ -164,7 +164,7 @@ def find(words):
 
     # sort the result pages by score in descending order and print them
     resultsList = list(results.items())
-    resultsList.sort(key=lambda x: x[1], reverse=True)
+    resultsList.sort(key = lambda x: x[1], reverse = True)
 
     for result in resultsList:
         print(result[0])
